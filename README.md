@@ -72,3 +72,11 @@ php composer require twig/twig
 ### Project
 Dit "skeleton" project is een eenvoudige instructie hoe je met twig kunt werken. 
 Kijk voor meer informatie en uitgebreide documentatie op de [twig site](https://twig.symfony.com)
+
+
+## Methoden en Technieken
+
+### Entity Relationship Diagram
+
+### Application Structure Diagram/ Functionele Decompositie
+Dit diagram toont het proces voor: 
