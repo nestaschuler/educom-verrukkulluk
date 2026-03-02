@@ -1,16 +1,20 @@
 <?php
-    class ingredient {
 
-    private $connection;
+class ingredient {
 
-    public function __construct($connection){
+private $connection;
+
+public function __construct($connection){
         $this->connection = $connection; 
-        }
+}
 
-    public function selectIngredient(){
+    public function selectIngredient($ingredient_id){
 
         $sql = "select * from ingredient where id = $ingredient_id";
 
-        $result= mysqli 
+        $result= mysqli_query($this->connection, $sql);
+        $ingredient = mysqli_fetch_array($result, MYSQLI_ASSOC);
+
+        return ($ingredient); 
     }
     }
