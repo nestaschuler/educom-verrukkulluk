@@ -8,7 +8,7 @@ public function __construct($connection) {
     $this->connection = $connection; 
 }
 
-    public function selecteerProduct($product_id) {
+    public function selectProduct($product_id) {
 
         $sql = "select * from product where id = $product_id";
 
