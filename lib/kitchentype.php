@@ -1,6 +1,6 @@
 <?php
 
-class kitchentype { 
+class Kitchentype { 
 
     private $connection; 
 

@@ -20,5 +20,4 @@ class database {
     public function getConnection() {
         return($this->connection);
     }
-
 }

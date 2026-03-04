@@ -1,12 +1,12 @@
 <?php
 
-class product {
+class Product {
 
-private $connection;
+    private $connection;
 
-public function __construct($connection) {
-    $this->connection = $connection; 
-}
+    public function __construct($connection) {
+        $this->connection = $connection; 
+    }
 
     public function selectProduct($product_id) {
 
@@ -17,7 +17,5 @@ public function __construct($connection) {
 
         return ($product);
     }
-
-
 }
 

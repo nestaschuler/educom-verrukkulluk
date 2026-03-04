@@ -1,6 +1,6 @@
 <?php
 
-class recipe {
+class Recipe {
 
     private $connection; 
 
@@ -16,5 +16,5 @@ class recipe {
         $recipe = mysqli_fetch_array($result, MYSQLI_ASSOC); 
 
         return ($recipe);
-    }
-    }
+    }   
+}
