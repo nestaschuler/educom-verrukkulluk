@@ -43,7 +43,6 @@ Class Ingredient {
                 //ik wil dat hij mij de ingredientenPlusArtikelen laat zien
 
                 return $ingredientenPlusArtikelen; 
-
         }
 
 }
