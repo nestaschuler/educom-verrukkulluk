@@ -15,6 +15,8 @@ class Recipe {
         $result = mysqli_query($this->connection, $sql);
         $recipe = mysqli_fetch_array($result, MYSQLI_ASSOC); 
 
+           
+
         return ($recipe);
     }   
 }
