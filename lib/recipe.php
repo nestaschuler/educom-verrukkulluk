@@ -8,24 +8,31 @@ class Recipe {
         $this->connection = $connection; 
     }
    
-    public function selectRecipe($recipe_id) {
+    public function selectRecipe($recipe_id=0) {
 
-        $sql = "SELECT * FROM recipe WHERE id = $recipe_id";
-        
+        //wanneer je geen recept selecteert wil ik dat hij alle recepten laat zien:
+
+        if ($recipe_id>0) {
+            $sql = "SELECT * FROM recipe WHERE id = $recipe_id";
+            } 
+            
+            else {
+            $sql = "SELECT * FROM recipe";
+            }
+
         $result = mysqli_query($this->connection, $sql);
-        $recipe = mysqli_fetch_array($result, MYSQLI_ASSOC); 
 
-        return ($recipe);
+        while ($row = mysqli_fetch_assoc($result)){
+            echo "<pre>";
+            print_r($row);
+            echo "<pre>";
+        }
+        
+        return ($result);
     }   
 
     //METHODES TOEGEVOEGD 
 
-    public function selectUser($user_id) {
-        $sql = "SELECT * FROM recipe WHERE user_id = $user_id";
-        $result = mysqli_query($this->connection, $sql);  
-        
-        return ($result);
-    }
 
     public function selectIngredient($recipe_id) {
         $sql = "SELECT * FROM ingredient WHERE recipe_id = $recipe_id";

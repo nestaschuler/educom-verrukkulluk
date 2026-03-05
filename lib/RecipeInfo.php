@@ -11,7 +11,7 @@ Class RecipeInfo {
         $this->user = new User ($connection); 
     }
 
-    public function selectUser($user_id){
+    private function selectUser($user_id){
         $user = $this->user->selectUser($user_id); 
         return($user); 
     }
@@ -53,7 +53,7 @@ Class RecipeInfo {
 
     //Wanneer een user Favorite heeft aangeklikt wil ik dit toevoegen aan mijn data
 
-    public function addFavorite ($user_id, $recipe_id){
+    private function addFavorite ($user_id, $recipe_id){
 
         $sql = "INSERT into recipe_info 
                 WHERE user_id = '$user_id'
@@ -67,7 +67,7 @@ Class RecipeInfo {
 
     //Wanneer een user Favorite verwijderd dan zal deze rij ook moeten verwijderd worden uit mijn data
 
-     public function deleteFavorite ($user_id, $recipe_id){
+     private function deleteFavorite ($user_id, $recipe_id){
 
         $sql = "DELETE FROM recipe_info 
                 WHERE user_id = '$user_id'
