@@ -4,6 +4,7 @@ Class RecipeInfo {
 
     private $connection; 
     private $user;
+    
 
     public function __construct($connection) {
         $this->connection = $connection; 
@@ -44,7 +45,36 @@ Class RecipeInfo {
 
             }
         } 
-        
+        //return wil ik buiten de while loop omdat ik wil dat hij dit bij elke rij gaat doen in recipe info waar rt= F of C
         return ($recipe_infoPlusUser);
     }
+
+    //METHODES TOEGEVOEGD
+
+    //Wanneer een user Favorite heeft aangeklikt wil ik dit toevoegen aan mijn data
+
+    public function addFavorite ($user_id, $recipe_id){
+
+        $sql = "INSERT into recipe_info 
+                WHERE user_id = '$user_id'
+                AND recipe_id = '$recipe_id'
+                AND record_type = 'F'";
+
+        $result = mysqli_query($this->connection, $sql);
+
+        return ($result); 
+     }
+
+    //Wanneer een user Favorite verwijderd dan zal deze rij ook moeten verwijderd worden uit mijn data
+
+     public function deleteFavorite ($user_id, $recipe_id){
+
+        $sql = "DELETE FROM recipe_info 
+                WHERE user_id = '$user_id'
+                AND recipe_id = '$recipe_id'
+                AND  record_type = 'F'"; 
+        $result = mysqli_query($this->connection, $sql); 
+
+        return ($result); 
+     }      
 }
