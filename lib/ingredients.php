@@ -1,6 +1,6 @@
 <?php
 
-Class Ingredient {
+Class Ingredients {
 
         private $connection; 
         private $product; 
@@ -15,13 +15,13 @@ Class Ingredient {
                 return($product); 
                 }
 
-        public function selectIngredient($recipe_id) {
+        public function selectIngredients($recipe_id) {
                 //Ik wil dat je alle ingredienten van 1 recept laat zien       
 
-                $sql = "select * from ingredient where recipe_id = $recipe_id"; 
+                $sql = "select * from ingredients where recipe_id = $recipe_id"; 
                 $result = mysqli_query($this->connection, $sql);
 
-                $ingredientenPlusArtikelen = [];
+                $ingredientsPlusProduct = [];
         
                  // ik wil per rij dat hij het bijbehorende product gaat ophalen    
                 while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
@@ -29,7 +29,7 @@ Class Ingredient {
                         $product_id = $row ['product_id']; 
                         $product = $this->selectProduct($product_id); 
 
-                        $ingredientenPlusArtikelen[] = [
+                        $ingredientsPlusProduct[] = [
                                 "id" => $row["id"],
                                 "recipe_id" => $row["recipe_id"],
                                 "product_id" => $row["product_id"],
@@ -38,11 +38,13 @@ Class Ingredient {
                                 "name" => $product["name"],
                                 "price"=> $product["price"], 
                                 ];
+
+                        echo "<pre>";      
                 }
                 
-                //ik wil dat hij mij de ingredientenPlusArtikelen laat zien
+                //ik wil dat hij mij de ingredientenPlusproducts laat zien
 
-                return $ingredientenPlusArtikelen; 
+                return $ingredientsPlusProduct; 
         }
 
 }

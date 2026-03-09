@@ -22,6 +22,8 @@ Class RecipeInfo {
         $result = mysqli_query($this->connection, $sql);
         
         $recipe_infoPlusUser =[];
+        $recipe_infoPreparation = [];
+        $recipe_infoRatings = []; 
 
         
         //ik wil dat zolang er recipe_info id zijn je laat zien dat wanneer er een C of F type is je de user daarbij ophaalt
@@ -44,9 +46,34 @@ Class RecipeInfo {
                                 ];
 
             }
+
+            if ($record_type == "P"){
+
+                $recipe_infoPreparation [] = [
+                                "id" => $row["id"],
+                                "record_type" => $row["record_type"],
+                                "recipe_id" => $row["recipe_id"],
+                                "text_field" => $row["text_field"],
+                                ];
+            }
+
+            if($record_type == "R"){
+                $recipe_infoRatings [] = [
+                    "id" => $row["id"],
+                    "record_type" => $row["record_type"],
+                    "recipe_id" => $row["recipe_id"],
+                    "numeric_field"=> $row["numeric_field"],
+                    "text_field" => $row["text_field"],
+                ];
+            }
         } 
         //return wil ik buiten de while loop omdat ik wil dat hij dit bij elke rij gaat doen in recipe info waar rt= F of C
-        return ($recipe_infoPlusUser);
+       echo "<pre>";
+
+        if ($record_type == "F"|| $record_type == "C") {return $recipe_infoPlusUser;}
+        if ($record_type == "P") {return $recipe_infoPreparation;} 
+        if ($record_type == "R") {return $recipe_infoRatings;}
+
     }
 
     //METHODES TOEGEVOEGD
