@@ -18,9 +18,9 @@ class Recipe {
         $this->product = new Product($connection); 
     }
    
-    public function selectRecipe($recipe_id=0) {
+    public function selectRecipe($recipe_id=0) {                            //wanneer je geen recept selecteert wil ik dat hij alle recepten laat zien:
 
-        //wanneer je geen recept selecteert wil ik dat hij alle recepten laat zien:
+        
 
         if ($recipe_id>0) {
             $sql = "SELECT * FROM recipe WHERE id = $recipe_id";
@@ -32,9 +32,8 @@ class Recipe {
 
         $result = mysqli_query($this->connection, $sql); 
 
-        while ($row = mysqli_fetch_assoc($result)){
-            
-            //haalt bijbehorende user, keuken, type en ingredienten op 
+        while ($row = mysqli_fetch_assoc($result)){                         //haalt bijbehorende user, keuken, type en ingredienten op 
+           
             $user=$this->selectUser($row["user_id"]);
             $kitchen=$this->selectKitchentype($row["kitchen_id"], 'K');
             $type=$this->selectKitchentype($row["type_id"], 'T'); 
@@ -45,10 +44,8 @@ class Recipe {
             $average_rating=$this->selectAverageRating($row["id"]); 
             $totalCalories=$this->calcCalories($row["id"]); 
             $totalPrice=$this->calcPrice($row["id"]); 
-
-
-            //Voeg recept toe plus bijbehorende waardes toe aan return-array
-            $return[] = [
+            
+            $return[] = [                                                   //Voeg recept toe plus bijbehorende waardes toe aan return-array
                 "recipe_id" => $row["id"],
                 "titel" => $row["titel"],  
                 "kitchen_id"=> $kitchen["description"],
