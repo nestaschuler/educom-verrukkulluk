@@ -43,9 +43,9 @@ class Recipe {
             $preparation=$this->selectRecipeInfo($row["id"], 'P'); 
             $ratings=$this->selectRecipeInfo($row["id"], 'R'); 
             $average_rating=$this->selectAverageRating($row["id"]); 
+            $totalCalories=$this->calcCalories($row["id"]); 
+            $totalPrice=$this->calcPrice($row["id"]); 
 
-           
-        
 
             //Voeg recept toe plus bijbehorende waardes toe aan return-array
             $return[] = [
@@ -64,8 +64,8 @@ class Recipe {
                 "preparation"=> array_column($preparation, "text_field"), 
                 "ratings"=> $ratings, 
                 "average_rating" => $average_rating,
-                //"calories" => 
-                //"price" => add all the prices from the products you use with the specific recipe 
+                "calories" => $totalCalories, 
+                "price" => $totalPrice, 
 
             ];
         }
@@ -118,104 +118,70 @@ class Recipe {
 
         while($row = mysqli_fetch_assoc($result)) {
             $ratings[] = $row["numeric_field"];
-        }
+        
 
             if (count($ratings) == 0) {
                 return null;
             }
 
-            else {
-            $average = array_sum($ratings)/ count($ratings);}
-        
-        return round($average);
+            $average = array_sum($ratings)/ count($ratings);
+            return round($average);
+        }
     }
 
-    //Methodes toevoegen calcalorien en calprice --> to do!
+    private function calcCalories($recipe_id){ 
 
-    private function calPrice($product){
-        $sql = "SELECT * FROM product WHERE id = $product_id";
+        $sql = "SELECT * FROM ingredients WHERE recipe_id = $recipe_id";
         $result = mysqli_query($this->connection, $sql);
 
-        
+        $totalCalories = 0;
+
+        while ($row = mysqli_fetch_assoc($result)) {
+            
+            $quantity = $row['quantity']; 
+            $product_id = $row['product_id']; 
 
 
-    
-    }
-
-}   
-
-
-
-
-    //METHODES TOEGEVOEGD 
-   
-
-    /* public function selectIngredient($recipe_id) {
-        $sql = "SELECT * FROM ingredient WHERE recipe_id = $recipe_id";
-        $result = mysqli_query($this->connection, $sql);  
-        
-        return ($result);
-    }
-
-    //calorien van een gerecht bereken je door de ingredienten van dat gerecht 
-    public function calcCalories() {}
-
-    //prijs van een gerecht bereken je door de producten die je moet kopen om dat gerecht te maken
-    public function calcPrice($recipe_id, $product_id) {
+            $product = $this->selectProduct($product_id);               //ik moet het product ophalen 
+            $calories= $product["calories"];                            //Calories per 100 gram
+            $unit = ($product['unit']); 
+            
+            if ($unit === "pieces"){                                    //calorien zijn per stuk ipv per 100 gram want 1 stuk avocado heeft 150 calorien                                          
+                $totalCalories += $calories * $quantity;
+            } 
+            
+            else {
+                $totalCalories += ($calories / 100) * $quantity;        //calories per 100 gram/ml 
+            }
         }
 
-    public function selectRating($recipe_id) {
-        $sql = "SELECT * FROM recipe_info 
-                WHERE recipe_id = $recipe_id
-                AND record_type = 'R'"; 
-
-        $result = mysqli_query($this->connection, $sql);  
-        
-        return ($result);
-    } 
-
-    public function selectSteps($recipe_id) {
-        $sql = "SELECT * FROM recipe_info 
-                WHERE recipe_id = $recipe_id
-                AND record_type = 'P'";
-
-        $result = mysqli_query($this->connection, $sql);  
-        
-        return ($result);
+        return ($totalCalories); 
     }
 
-    public function selectComments($recipe_id) {
-        $sql = "SELECT * FROM recipe_info 
-                WHERE recipe_id = $recipe_id
-                AND record_type = 'C'";
+    private function calcPrice($recipe_id){
+        
+        $sql = "SELECT * FROM ingredients WHERE recipe_id = $recipe_id"; //ik heb ingredienten en producten nodig om te weten welke totaal prijs er per recept is. 
+        $result = mysqli_query($this->connection, $sql);
 
-        $result = mysqli_query($this->connection, $sql);  
-        
-        return ($result);
-    }
+        $totalPrice = 0;
 
-    public function selectKitchen($kitchen_id){
-        $sql = "SELECT * FROM recipe WHERE kitchen_id = $kitchen_id";
-        $result = mysqli_query($this->connection, $sql);  
-        
-        return ($result);
-    }
+        while ($row = mysqli_fetch_assoc($result)) {
+           
+            $quantity = $row['quantity'];                               // ik moet ook quantity pakken, want als ze 2x van een product nodig hebben dan moet de prijs van dat product * 2/ 
+            $product_id = $row['product_id'];
+            
+            $product = $this->selectProduct($product_id);               // product ophalen
 
-    public function selectType($type_id){
-        $sql = "SELECT * FROM recipe WHERE type_id = $type_id";
-        $result = mysqli_query($this->connection, $sql);  
-        
-        return ($result);
-    }
+            $price = $product['price'];
+            $packagingAmount = $product['packaging_amount'];            // ik heb dit toegevoegd omdat het belangrijk is om de prijs te berekenen, omdat je soms 2x een product nodig hebt en andere keren maar 1x
 
-    public function determineFavorite($user_id, $recipe_id){
-        $sql = "SELECT * FROM recipe_info 
-                WHERE user_id = $user_id
-                AND recipe_id = $recipe_id
-                AND record_type = 'F'";
-        
-        $result = mysqli_query($this->connection, $sql);  
-        
-        return ($result);
+            $packagesNeeded = ceil($quantity / $packagingAmount);       // dit is het aantal packages dat je sowieso nodig hebt, ik heb ceil toegevoegd want dit zorg ervoor dat het nummer naar boven word afgerond, je kan niet bv. 0,4 product uit de winkel halen. 
+    
+            $totalPrice += $packagesNeeded * $price; 
+        }
+
+        return ($totalPrice); 
+
     }
-} */
+}
+

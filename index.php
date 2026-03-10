@@ -20,7 +20,7 @@ $rpin = new RecipeInfo ($db->getConnection());
 $rp = new Recipe ($db->getConnection()); 
 
 /// VERWERK 
-$recipe = $rp->selectRecipe(1); 
+$recipe = $rp->selectRecipe(0); 
 
 /// RETURN
 var_dump($recipe); 
