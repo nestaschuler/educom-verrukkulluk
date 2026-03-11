@@ -20,7 +20,6 @@ class Recipe {
    
     public function selectRecipe($recipe_id=0) {                            //wanneer je geen recept selecteert wil ik dat hij alle recepten laat zien:
 
-        
 
         if ($recipe_id>0) {
             $sql = "SELECT * FROM recipe WHERE id = $recipe_id";

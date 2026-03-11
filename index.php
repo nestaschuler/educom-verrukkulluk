@@ -7,6 +7,7 @@ require_once("lib/user.php");
 require_once("lib/kitchentype.php");
 require_once("lib/RecipeInfo.php");
 require_once("lib/recipe.php");
+require_once("lib/groceries.php"); 
 
 
 
@@ -18,9 +19,10 @@ $us = new User ($db->getConnection());
 $kt = new Kitchentype ($db->getConnection()); 
 $rpin = new RecipeInfo ($db->getConnection());
 $rp = new Recipe ($db->getConnection()); 
+$gr = new Groceries ($db->getConnection()); 
 
 /// VERWERK 
-$recipe = $rp->selectRecipe(0); 
+$groceries = $gr->addGroceries(1, 1); 
 
 /// RETURN
 var_dump($recipe); 
