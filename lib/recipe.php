@@ -89,15 +89,14 @@ class Recipe {
 
     Private function selectAverageRating($recipe_id){
                                                                    
-        $ratingRows = $this->selectRecipeInfo($recipe_id, 'R');                                    // Haal eerst alle ratings op bij dat recipe_id, ik haal dus de rijen op van dat recipe_id met bijbehorende rating
+        $ratings = array_column($this->selectRecipeInfo($recipe_id, 'R'), 'numeric_field');                                    // Haal eerst alle ratings op bij dat recipe_id, ik haal dus de rijen op van dat recipe_id met bijbehorende rating
 
-        if (count($ratingRows) === 0) {                                                            // geen ratings geef null terug
+
+        if (count($ratings) > 0){
+            return round(array_sum($ratings)/ count ($ratings));                                                               // Gemiddelde berekenen
+        } else {
             return null; 
-        }
-
-        $ratings = array_column($ratingRows, 'numeric_field'); 
-
-        return round(array_sum($ratings) / count($ratings));                                        // Gemiddelde berekenen
+        }                            
     }
 
     Private function calcCalories($ingredients){ 

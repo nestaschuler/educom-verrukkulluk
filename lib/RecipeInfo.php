@@ -26,15 +26,18 @@ Class RecipeInfo {
 
         while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {                                //ik wil dat zolang er recipe_info id zijn je laat zien dat wanneer er een C of F type is je de user daarbij ophaalt
             
+            $extra = [];                                                                            // initaliseren van de extra variabelen zodat extra altijd bestaat en een array is zelfs als if niet waar is, anders error
         
-            if ($record_type == "F" || $record_type == "C") {
-                
-                $user = $this->selectUser($row['user_id']);
-                $row['user_name'] = $user['user_name'];
-                $row['image'] = $user['image']; 
+            if (in_array($record_type, ['F', 'C'], true)) {                                         //wanneer je door de rij van record types gaat en je komt een F of C tegen dan is hij true dus user ophalen!
+
+                $user = $this->selectUser($row['user_id'] ?? null) ?? [];                           //de ?? null checkt of $row[]user_id] bestaat en niet null is en als dit niet bestaat of null is wordt null gebruikt 
+                $extra = [
+                    'user_name' => $user['user_name'] ?? null,
+                    'image' => $user['image'] ?? null,
+                ];
             } 
             
-            $recipe_infoPlusUser [] = $row;
+            $recipe_infoPlusUser[] = array_merge($row, $extra);
         } 
 
         return $recipe_infoPlusUser;                                                                 //return wil ik buiten de while loop omdat ik wil dat hij dit bij elke rij gaat doen in recipe info waar rt= F of C
