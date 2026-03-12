@@ -22,7 +22,7 @@ $rp = new Recipe ($db->getConnection());
 $gr = new Groceries ($db->getConnection()); 
 
 /// VERWERK 
-$groceries = $gr->addGroceries(1, 1); 
+$groceries = $gr->addGroceries(1, 2); 
 
 /// RETURN
-var_dump($recipe); 
+ 
