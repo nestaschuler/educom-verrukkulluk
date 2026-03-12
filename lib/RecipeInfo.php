@@ -22,65 +22,31 @@ Class RecipeInfo {
         $result = mysqli_query($this->connection, $sql);
         
         $recipe_infoPlusUser =[];
-        $recipe_infoPreparation = [];
-        $recipe_infoRatings = []; 
 
+
+        while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {                                //ik wil dat zolang er recipe_info id zijn je laat zien dat wanneer er een C of F type is je de user daarbij ophaalt
+            
         
-        //ik wil dat zolang er recipe_info id zijn je laat zien dat wanneer er een C of F type is je de user daarbij ophaalt
-
-          while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-
             if ($record_type == "F" || $record_type == "C") {
 
-                $user_id = $row ["user_id"];
-                $user = $this->selectUser($user_id); 
-
-                $recipe_infoPlusUser [] = [
-                                "id" => $row["id"],
-                                "record_type" => $row["record_type"],
-                                "recipe_id" => $row["recipe_id"],
-                                "user_id" => $row["user_id"],
-                                "user_name" => $user["user_name"], 
-                                "image"=> $user["image"], 
-                                "text_field" => $row["text_field"],
-                                ];
-
-            }
-
-            if ($record_type == "P"){
-
-                $recipe_infoPreparation [] = [
-                                "id" => $row["id"],
-                                "record_type" => $row["record_type"],
-                                "recipe_id" => $row["recipe_id"],
-                                "text_field" => $row["text_field"],
-                                ];
-            }
-
-            if($record_type == "R"){
-                $recipe_infoRatings [] = [
-                    "id" => $row["id"],
-                    "record_type" => $row["record_type"],
-                    "recipe_id" => $row["recipe_id"],
-                    "numeric_field"=> $row["numeric_field"],
-                    "text_field" => $row["text_field"],
-                ];
-            }
+                $user = $this->selectUser($row['user_id']);
+                $row['user_name'] = $user['user_name'];
+                $row['image'] = $user['image']; 
+            } 
+            
+            $recipe_infoPlusUser [] = $row;
         } 
-        //return wil ik buiten de while loop omdat ik wil dat hij dit bij elke rij gaat doen in recipe info waar rt= F of C
+
        echo "<pre>";
 
-        if ($record_type == "F"|| $record_type == "C") {return $recipe_infoPlusUser;}
-        if ($record_type == "P") {return $recipe_infoPreparation;} 
-        if ($record_type == "R") {return $recipe_infoRatings;}
-
+        return $recipe_infoPlusUser;                                                                 //return wil ik buiten de while loop omdat ik wil dat hij dit bij elke rij gaat doen in recipe info waar rt= F of C
+                                 
     }
 
     //METHODES TOEGEVOEGD
 
-    //Wanneer een user Favorite heeft aangeklikt wil ik dit toevoegen aan mijn data
-
-    private function addFavorite ($user_id, $recipe_id){
+                                                                                                    
+    private function addFavorite ($user_id, $recipe_id){                                            //Wanneer een user Favorite heeft aangeklikt wil ik dit toevoegen aan mijn data
 
         $sql = "INSERT into recipe_info 
                 WHERE user_id = '$user_id'
@@ -92,9 +58,8 @@ Class RecipeInfo {
         return ($result); 
      }
 
-    //Wanneer een user Favorite verwijderd dan zal deze rij ook moeten verwijderd worden uit mijn data
 
-     private function deleteFavorite ($user_id, $recipe_id){
+     private function deleteFavorite ($user_id, $recipe_id){                                        //Wanneer een user Favorite verwijderd dan zal deze rij ook moeten verwijderd worden uit mijn data
 
         $sql = "DELETE FROM recipe_info 
                 WHERE user_id = '$user_id'

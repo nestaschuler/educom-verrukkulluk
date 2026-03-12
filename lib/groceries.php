@@ -3,58 +3,42 @@
 Class Groceries {
 
     Private $connection;
+    Private $ingredients;
 
     Public function __construct($connection){
         $this->connection = $connection; 
+        $this->ingredients = new Ingredients($connection);
     }
 
-    Public function addGroceries($recipe_id, $user_id) {
-
-        $sql = "SELECT * from ingredients where recipe_id = $recipe_id"; 
-        $result = mysqli_query($this->connection, $sql);
-
-        while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+    Public function addGroceries($recipe_id, $user_id) {                                    
         
-            echo "<pre>"; 
-            print_r($row); 
+        $ingredients = $this->ingredients->selectIngredients($recipe_id);                           // Haal ingrediënten op via de bestaande Recipe class
 
-            $product_id = $row["product_id"];                                               // ga naar het product dat bij het recept hoort 
-            
-            $exists = $this->productOnList($product_id, $user_id);                          // kijken of producten al op de lijst staan
+        foreach ($ingredients as $ingredient) {                                                     // voor elk ingredient ga je kijken of het product bij die user op de lijst staat
+            $product_id = $ingredient['product_id'];
 
-                if ($exists) {                                                              // als het product bestaat moet het amount verhoogd worden
+            if ($this->productOnList($product_id, $user_id)) {                                      // als product op lijst staat, voeg 1 toe (dus update)
+                $updateSql = "UPDATE groceries 
+                              SET amount = amount + 1 
+                              WHERE user_id = $user_id AND product_id = $product_id";
+                mysqli_query($this->connection, $updateSql);
+            } else {                                                                                // als product niet op lijst staat voeg product toe
+                $insertSql = "INSERT INTO groceries (user_id, recipe_id, product_id, amount)
+                              VALUES ($user_id, $recipe_id, $product_id, 1)";
+                mysqli_query($this->connection, $insertSql);
+            }
 
-                    $sql = "UPDATE groceries
-                            SET amount = amount + 1
-                            WHERE user_id = $user_id
-                            AND product_id = $product_id";
-
-                   
-                    mysqli_query($this->connection, $sql); 
-                    
-                    echo "Amount of products +1";
-                    echo "<pre>";
-                    echo $sql; 
-                  
-                    ; 
-                }
-                
-                else {
-
-                    $sql =  "INSERT INTO groceries 
-                            (user_id, recipe_id, product_id, amount) 
-                            VALUES ($user_id, $recipe_id, $product_id, 1)";                 //als het product niet bestaat moet het worden toegevoegd 
-                    
-                    mysqli_query($this->connection, $sql); 
-                    
-                    echo "Product added"; 
-                    echo "<pre>";
-                    echo $sql; 
-                    
-                }
+            $added[] = [                                                                            // ik wil dat hij return laat zien waarin hij het product, naam van ingredient en hoeveelheid die hij heeft toegevoegd = +1 
+                'user_id' => $user_id, 
+                'recipe_id' => $recipe_id,
+                'product_id' => $product_id,
+                'name' => $ingredient['name'],
+                'quantity_added' => 1
+            ];
         }
-    }     
-
+    
+        return $added; 
+    }
 
     Private function productOnList($product_id, $user_id){
 
@@ -66,18 +50,18 @@ Class Groceries {
 
         if(!$result){
             echo "SQL error in productOnList():" . mysqli_error($this->connection);
-            return false;                                                                   //query faalt --> behandelen als niet op lijst
+            return false;                                                                       //query faalt --> behandelen als niet op lijst
         }
 
-        return mysqli_num_rows($result) > 0;                                                // true als het product dus al op de lisjt staat
+        return mysqli_num_rows($result) > 0;                                                    // true als het product dus al op de lisjt staat
     }
 
     Public function deleteGroceries($user_id) {
         
-        $sql = "DELETE FROM groceries WHERE user_id = $user_id";                            //verwijder alle rijen van deze gebruiker
+        $sql = "DELETE FROM groceries WHERE user_id = $user_id";                                //verwijder alle rijen van deze gebruiker
         mysqli_query($this->connection, $sql);
 
-        $sql2 = "ALTER TABLE groceries AUTO_INCREMENT = 1";                                 //ik wil dat groceries id weer reset
+        $sql2 = "ALTER TABLE groceries AUTO_INCREMENT = 1";                                     //ik wil dat groceries id weer reset
         mysqli_query($this->connection, $sql2); 
 
         echo"<pre>";

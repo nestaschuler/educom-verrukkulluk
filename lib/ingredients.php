@@ -15,15 +15,15 @@ Class Ingredients {
                 return($product); 
                 }
 
-        public function selectIngredients($recipe_id) {
-                //Ik wil dat je alle ingredienten van 1 recept laat zien       
+        public function selectIngredients($recipe_id) {                                                 //Ik wil dat je alle ingredienten van 1 recept laat zien   
+                   
 
                 $sql = "select * from ingredients where recipe_id = $recipe_id"; 
                 $result = mysqli_query($this->connection, $sql);
 
-                $ingredientsPlusProduct = [];
+                $ingredientsPlusProduct = [];                                                           // ik wil per rij dat hij het bijbehorende product gaat ophalen    
         
-                 // ik wil per rij dat hij het bijbehorende product gaat ophalen    
+                
                 while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
            
                         $product_id = $row ['product_id']; 
@@ -36,15 +36,17 @@ Class Ingredients {
                                 "quantity" => $row["quantity"],
                                 "unit" => $product["unit"], 
                                 "name" => $product["name"],
-                                "price"=> $product["price"], 
+                                "price"=> $product["price"],
+                                "packaging" => $product["packaging"], 
+                                "calories" => $product["calories"],
+                                "packaging_amount" => $product["packaging_amount"],
                                 ];
 
                         echo "<pre>";      
                 }
                 
-                //ik wil dat hij mij de ingredientenPlusproducts laat zien
 
-                return $ingredientsPlusProduct; 
+                return $ingredientsPlusProduct;                                                         //ik wil dat hij mij de ingredientenPlusproducts laat zien
         }
 
 }
