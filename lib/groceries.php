@@ -64,7 +64,6 @@ Class Groceries {
         $sql2 = "ALTER TABLE groceries AUTO_INCREMENT = 1";                                     //ik wil dat groceries id weer reset
         mysqli_query($this->connection, $sql2); 
 
-        echo"<pre>";
         echo"All groceries are deleted";
     }
  }

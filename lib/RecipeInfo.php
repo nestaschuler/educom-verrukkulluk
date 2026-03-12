@@ -28,7 +28,7 @@ Class RecipeInfo {
             
         
             if ($record_type == "F" || $record_type == "C") {
-
+                
                 $user = $this->selectUser($row['user_id']);
                 $row['user_name'] = $user['user_name'];
                 $row['image'] = $user['image']; 
@@ -36,8 +36,6 @@ Class RecipeInfo {
             
             $recipe_infoPlusUser [] = $row;
         } 
-
-       echo "<pre>";
 
         return $recipe_infoPlusUser;                                                                 //return wil ik buiten de while loop omdat ik wil dat hij dit bij elke rij gaat doen in recipe info waar rt= F of C
                                  

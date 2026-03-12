@@ -18,12 +18,9 @@ class Recipe {
    
     Public function selectRecipe($recipe_id=0) {                            //wanneer je geen recept selecteert wil ik dat hij alle recepten laat zien:
 
-
         if ($recipe_id>0) {
             $sql = "SELECT * FROM recipe WHERE id = $recipe_id";
-            } 
-            
-            else {
+            } else {
             $sql = "SELECT * FROM recipe";
             }
 
@@ -57,7 +54,6 @@ class Recipe {
             ];
         }
 
-        echo "<pre>";
         return $return; 
 
     }
@@ -112,10 +108,9 @@ class Recipe {
 
             if ($ingredient['unit'] === "pieces") { 
                 $totalCalories += $ingredient["calories"] * $ingredient["quantity"];
-            } 
-                else {
+            } else {
                 $totalCalories += ($ingredient["calories"] / 100) * $ingredient["quantity"];
-                }
+            }
         }
     
         return $totalCalories;

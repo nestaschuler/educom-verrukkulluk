@@ -15,7 +15,6 @@ class Kitchentype {
         $result = mysqli_query($this->connection, $sql);
         $kitchentype = mysqli_fetch_array($result, MYSQLI_ASSOC); 
 
-        echo "<pre>"; 
         return ($kitchentype); 
     }
 }  

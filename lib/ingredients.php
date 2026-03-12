@@ -41,8 +41,7 @@ Class Ingredients {
                                 "calories" => $product["calories"],
                                 "packaging_amount" => $product["packaging_amount"],
                                 ];
-
-                        echo "<pre>";      
+    
                 }
                 
 

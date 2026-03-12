@@ -14,8 +14,7 @@ class Product {
 
         $result = mysqli_query($this->connection, $sql);
         $product = mysqli_fetch_array($result, MYSQLI_ASSOC);
-
-        echo "<pre>";       
+    
         return ($product);  
     }
 }
