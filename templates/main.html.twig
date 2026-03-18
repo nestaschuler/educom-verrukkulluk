@@ -11,39 +11,89 @@
     <link rel="stylesheet" type="text/css" href="assets/css/main.css" />
 
     <script type="text/javascript" language="javascript" src="assets/jquery/jquery-3.5.1.js"></script>
-    <script type="text/javascript" language="javascript" src="assets/bootstrap/js/bootstrap.js"></script>
+    <script type="text/javascript" language="javascript" src="assets/bootstrap/js/bootstrap.bundle.js"></script>
 
-</html>
+</head>
+
 <body>
 <div class="container-fluid">
+
+<!--Bovenste Rij -->
 
     <div class="row">
         <div class="col-md-12">
         {% block header %}
-            
+    
         {% endblock %}   
         </div>
     </div>
 
-    <div class="row">
+<!-- AGENDA BLOK -->
+   <div class="row">
         <div class="col-md-3">
-            <h2>Agenda</h2>
-            <i class="fa fa-calendar"></i> FontAwesome <a href="https://fontawesome.com/icons?d=gallery&m=free">Documentation</a><br>
-            <i class="fa fa-file-pdf"></i><a href="https://www.layoutit.com/build">Layout-it</a>
 
+    {% set agenda = [
+        { titel: 'Vegetarisch koken', omschrijving: 'Een workshop vegetarisch koken, onder leiding van Nesta Schuler' },
+        { titel: 'Vegetarisch koken', omschrijving: 'Een workshop vegetarisch koken, onder leiding van Nesta Schuler' },
+        { titel: 'Vegetarisch koken', omschrijving: 'Een workshop vegetarisch koken, onder leiding van Nesta Schuler' },
+        { titel: 'Vegetarisch koken', omschrijving: 'Een workshop vegetarisch koken, onder leiding van Nesta Schuler' },
+        { titel: 'Vegetarisch koken', omschrijving: 'Een workshop vegetarisch koken, onder leiding van Nesta Schuler' }
+        ] %}
 
+<div class="agenda-block">  
+    <img src="assets/img/verrukkulluk-agenda.png" alt="Agenda Icon" class="agenda-top-icon mb-3">
+
+    {% for item in agenda %}
+        <div class="agenda-item">
+            <div class="icon-calendar"><i class="fa fa-calendar"></i></div>
+
+            <div class="agenda-content">
+                <h3>{{ item.titel }}</h3>
+                <p>{{ item.omschrijving }}</p>
+            </div>
         </div>
+    {% endfor %}
+
+</div>
+
+<!--Login Block -->
+
+<div class= "login-block">
+    <img src="assets/img/verrukkulluk-login.png" alt="login" class ="login-logo"
+<form>
+    <input type="email" placeholder="Email" class="form-control mb-2">
+    <input type="password"placeholder="Wachtwoord"class="form-control mb-2">
+    <button type="submit" class="login-btn">Login</button>
+</form>
+  </div>
+
+<!--Content -->
+
+</div>
+
+      </div>
         <div class="col-md-9">
-            <h2>Content</h2>
+            <h2>Hier komt de homepage met de 4 recepten etc.</h2>
             {%  block content %}
             {%  endblock %}
         </div>
-    </div>
+    </div> 
 
+<!--Footer-->
 
     <div class="row">
         <div class="col-md-12">
-            <h1>Footer</h1>
+            <div class="footer">
+            <div class="footer-content">
+            <img src="assets\img\verrukkulluk-pay-off.png" class= "footer-icon">
+
+            <div class="footer-text"> 
+            <h1>Contact</h1>
+            <p>Verrukkulluk.nl<br>
+                Poststraat 2b<br>
+                Sittard<br>
+                info@verrukkulluk.nl
+            </p>
         </div>
     </div>
 

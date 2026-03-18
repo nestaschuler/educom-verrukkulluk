@@ -49,6 +49,143 @@ h3, h4, h5 {
 
 /** HTML / BODY **/
 html, body {
+    height: 100%; 
     font-family: "Helvetica Neue", Arial, SansSerif;
     font-size: 16px;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+.container-fluid{
+    flex: 1;
+}
+
+/*AGENDA CLASS*/
+
+.agenda-block {
+    background-color: var(--lighter-green);
+    padding: 20px; 
+    border-radius: 10px;
+    color: rgb(255, 255, 255); 
+    box-shadow: 0 8px 12px rgba(0,0,0,0.25); 
+}
+
+.agenda-top-icon {
+    width: 120px;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Grote titel "Agenda" */
+.agenda-block h2 {
+    font-family: 'Dancing Script', cursive; /* handgeschreven stijl */
+    font-size: 36px;
+    color: #fff;
+    text-align: center;
+}
+
+/* Subkopjes "Vegetarisch koken" */
+.agenda-item h3 {
+    font-family: 'Pacifico', cursive;
+    font-weight: 700;
+    font-size: 32px;
+    margin: 0 0 6px 0;
+    color: #000;
+}
+
+/* Paragraaftekst */
+.agenda-item p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.4;
+    color: #000;
+}
+
+
+.agenda-item {
+    display: flex;            /* horizontaal naast elkaar */
+    align-items: flex-start;  /* icoon uitlijnen met tekst */
+    gap: 15px;                /* ruimte tussen icoon en tekst */
+    margin-bottom: 25px;
+}
+
+/* Icoon groter maken */
+.icon-calendar {
+    font-size: 40px;          /* groter maken, bv 36px */
+    color: #fff;              /* kleur van icoon */
+    flex-shrink: 0;           /* voorkomt dat het icoon kleiner wordt */
+    margin-top: 4px;          /*uitlijnen met tekst */
+}
+
+
+/*LOGIN BLOCK*/
+.login-block{
+    background: #b31714;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.25); 
+    color: white;
+    margin: 25px 0; 
+    box-shadow: 0 8px 12px rgba(0,0,0,0.25); 
+    
+}
+
+.login-logo {
+    display: block;
+    margin: 0 auto 10px auto; /* centreren + ruimte onder */
+    max-width: 120px; /* grootte aanpassen */
+    height: auto;
+}
+
+
+.login-btn {
+    background-color: #eb8d1f; 
+    border: none;
+    padding: 10px 25px;
+    border-radius: 8px;
+    font-size: 36px;
+    font-family: var(--heading); 
+    color: white;
+    cursor: pointer;
+    display: block;
+    margin: 20px auto 0; 
+}
+
+
+/*FOOTER CLASS*/
+
+.footer {
+    background-color: #eb8d1f; 
+    padding: 30px 20px;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+.footer-content {
+    display: flex;
+    align-items: flex-start; /*boven uitlijnen ipv midden*/
+    gap: 20px;
+}
+
+.footer-icon {
+    width: 80px;
+    height: auto;
+}
+
+.footer-text h2 {
+    margin: 0;
+    font-size: 40px;
+    font-weight: bold;
+    font-family: "Brush Script MT", cursive; /* Lijkt op het handgeschreven font */
+}
+
+.footer-text p {
+    margin: 5px 0 0;
+    line-height: 1.5;
+    font-size: 18px;
+    display: flex;
+    flex-direction: column; /*zet Contact boven de tekst*/ 
 }

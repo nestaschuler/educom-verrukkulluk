@@ -1,29 +1,58 @@
 <?php
+//// Allereerst zorgen dat de "Autoloader" uit vendor opgenomen wordt:
+require_once("./vendor/autoload.php");
 
-require_once("lib/database.php");
-require_once("lib/product.php");
-require_once("lib/ingredients.php");
-require_once("lib/user.php");
-require_once("lib/kitchentype.php");
-require_once("lib/RecipeInfo.php");
-require_once("lib/recipe.php");
-require_once("lib/groceries.php"); 
+/// Twig koppelen:
+$loader = new \Twig\Loader\FilesystemLoader("./templates");
+/// VOOR PRODUCTIE:
+/// $twig = new \Twig\Environment($loader), ["cache" => "./cache/cc"]);
+
+/// VOOR DEVELOPMENT:
+$twig = new \Twig\Environment($loader, ["debug" => true ]);
+$twig->addExtension(new \Twig\Extension\DebugExtension());
+
+/******************************/
+
+/// Next step, iets met je data doen. Ophalen of zo
+require_once("fase-2/lib/recipe.php");
+$recipe = new Recipe(1);
+$data = $recipe->selectRecipe(1);
 
 
+/*
+URL:
+http://localhost/index.php?recipe_id=4&action=detail
+*/
 
-/// INIT
-$db = new Database();
-$pd = new Product ($db->getConnection());
-$in = new Ingredients ($db->getConnection());
-$us = new User ($db->getConnection());
-$kt = new Kitchentype ($db->getConnection()); 
-$rpin = new RecipeInfo ($db->getConnection());
-$rp = new Recipe ($db->getConnection()); 
-$gr = new Groceries ($db->getConnection()); 
+$recipe_id = isset($_GET["recipe_id"]) ? $_GET["recipe_id"] : "";
+$action = isset($_GET["action"]) ? $_GET["action"] : "homepage";
 
-/// VERWERK 
-$recipe = $rp->selectRecipe(1); 
 
-/// RETURN
-echo"<pre>";
-var_dump($recipe);
+switch($action) {
+
+        case "homepage": {
+            $data = $recipe->selectRecipe();
+            $template = 'homepage.html.twig';
+            $title = "homepage";
+            break;
+        }
+
+        case "detail": {
+            $data = $recipe->selectRecipe($recipe_id);
+            $template = 'detail.html.twig';
+            $title = "detail pagina";
+            break;
+        }
+
+        /// etc
+
+}
+
+
+/// Onderstaande code schrijf je idealiter in een layout klasse of iets dergelijks
+/// Juiste template laden, in dit geval "homepage"
+$template = $twig->load($template);
+
+
+/// En tonen die handel!
+echo $template->render(["title" => $title, "data" => $data]);

@@ -98,7 +98,7 @@ class Recipe {
             return null; 
         }                            
     }
-
+  
     Private function calcCalories($ingredients){ 
 
         $totalCalories = 0;
