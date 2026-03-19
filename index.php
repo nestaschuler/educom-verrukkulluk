@@ -15,8 +15,8 @@ $twig->addExtension(new \Twig\Extension\DebugExtension());
 
 /// Next step, iets met je data doen. Ophalen of zo
 require_once("fase-2/lib/recipe.php");
-$recipe = new Recipe(1);
-$data = $recipe->selectRecipe(1);
+$recipe = new Recipe(0);
+$data = $recipe->selectRecipe(0);
 
 
 /*
@@ -31,7 +31,7 @@ $action = isset($_GET["action"]) ? $_GET["action"] : "homepage";
 switch($action) {
 
         case "homepage": {
-            $data = $recipe->selectRecipe();
+            $data = $recipe->selectRecipe($recipe_id);
             $template = 'homepage.html.twig';
             $title = "homepage";
             break;

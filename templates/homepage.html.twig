@@ -1,48 +1,90 @@
 {# Opnemen van de "Main" file #}
 {% extends "main.html.twig" %}
 
-{% block header %}
-<img src="assets/img/logo-v2.png"/>
-{% endblock %}
 
+{% block header %}
+<a href="index.php?action=homepage" class="hero-header-link">
+    <div class="hero-header">
+        <img src="assets/img/istockphoto-1147252758-612x612.jpg" alt= "afbeelding header" class="hero-bg">
+
+        <!-- Logo linksboven -->
+    
+        <img src="assets/img/logo-v2.png" alt="Verrukkulluk logo" class="hero-logo">
+    
+
+        <!-- Zoekbalk rechtsboven--> 
+
+        <form class="search-form" onclick="event.stopPropagation()">
+        <input type="text" class="form-control search-input" placeholder="Zoeken">
+        </form> 
+    </div>
+</a> 
+
+{% endblock %}
 
 {# nu de block content op in de main pagina vullen #}
+
 {% block content %}
-    {# Dit is commentaar #}
 
-    {# Print #}
-    <h1>Heading #1</h1>
-    <h2>Heading #2</h2>
-    <h3>Heading #3 t/m 5</h3>
-
-    <h4>Dit is de template {{  title }}</h4>
-
-{# Loop #}
-    <ul>
+<div class="row">
     {% for record in data %}
-        <li>
-            <img src="{{ record.foto }}" style="width: 100px; heigfht: 100px;">
+        <div class="col-md-6 mb-4">
+            <div class="recipe-card">
 
-            {{ record.title }}
-            {# sub-loop #}
-            <ul>
-                {% for ingr in record.ingredients %}
-                    <li>
-                        <span {% if ingr.id < 2 %}style='color: #F00'{% endif %}>{{  ingr.name }}</span>
+            <!-- foto -->
 
-                        {# if #}
-                        {%  if ingr.id == 3 %}
-                            <strong>Dit is ID 3!</strong>
-                        {%  endif  %}
-                    </li>
-                {% endfor %}
-            </ul>
-        </li>
+                <img src="{{ record.foto }}" class="img-fluid mb-2" style="height:150px; object-fit:cover; width:100%;">
+
+            <!-- content met padding -->
+
+            <div class="recipe-content">
+
+            <!--Titel + Sterren -->
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <h3 class= "recipe-title mb-0">{{ record.titel|default('Eggs & Veggies') }}</h3>
+                <div class="recipe-stars">
+                    {% for i in 1..5 %}
+                        {% if i <= record.rating %}
+                            <i class="fa fa-star star-on" style="color: #fca01f;"></i>
+                        {% else %}
+                            <i class="fa fa-star star-off" style="color: #ddd;"></i>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Beschrijving -->
+
+            <p class="recipe-description">{{ record.description|default('Lorem ipsum dolor sit amet, consectetur adipiscing elit, do eiusmod tempor incididunt ut labore et dolore magna aliqua.') }}</p>
+
+            
+
+            <!-- Knop + meta-info -->
+
+                <div class="d-flex align-items-center justify-content-between mt-3">
+                    <a href="index.php?action=recipe&id={{ record.id }}" class="smullen-btn">Smullen!</a>
+
+                      <div class="d-flex gap-3">
+                            <span class="recipe-meta"><i class="fa fa-users"></i> {{ record.persons }}</span>
+                            <span class="recipe-meta">€ {{ record.price }},-</span>
+                            <span class="recipe-meta"><i class="fa fa-fire"></i> {{ record.calories }}</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
     {% endfor %}
-    <ul>
-     {# Dump #}
-       <pre>
-        {{ dump(data) }}
-       </pre>
+</div>
+</div>
+
+<div class="pagination-bar">
+    {% for i in 1..8 %}
+        <button class="pagination-btn {% if i == 1 %}active{% endif %}">{{ i }}</button>
+    {% endfor %}
+</div>
+
+<!--<pre>{{ dump(data) }}</pre>-->
 
 {% endblock %}
+

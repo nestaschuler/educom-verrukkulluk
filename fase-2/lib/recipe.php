@@ -27,6 +27,26 @@ class Recipe {
                     ["id" => 6, "product_id" => 31, "recipe_id" => 1, "name" => "Hamblokjes"],
                 ]
             ],
+
+            [   "id" => 2,
+                "title" => "Bami",
+                "foto" => "https://www.leukerecepten.nl/wp-content/uploads/2019/03/bami_v.jpg",
+                "ingredients" => [
+                    ["id" => 4, "prodcut_id" => 10, "recipe_id" => 1, "name" => "Mie nestjes"],
+                    ["id" => 5, "product_id" => 12, "recipe_id" => 1, "name" => "Bami kruiden"],
+                    ["id" => 6, "product_id" => 31, "recipe_id" => 1, "name" => "Hamblokjes"],
+                ]
+            ],
+
+            [   "id" => 2,
+                "title" => "Bami",
+                "foto" => "https://www.leukerecepten.nl/wp-content/uploads/2019/03/bami_v.jpg",
+                "ingredients" => [
+                    ["id" => 4, "prodcut_id" => 10, "recipe_id" => 1, "name" => "Mie nestjes"],
+                    ["id" => 5, "product_id" => 12, "recipe_id" => 1, "name" => "Bami kruiden"],
+                    ["id" => 6, "product_id" => 31, "recipe_id" => 1, "name" => "Hamblokjes"],
+                ]
+            ],
         ];
 
 

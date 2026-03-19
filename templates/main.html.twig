@@ -14,11 +14,12 @@
     <script type="text/javascript" language="javascript" src="assets/bootstrap/js/bootstrap.bundle.js"></script>
 
 </head>
-
 <body>
-<div class="container-fluid">
 
-<!--Bovenste Rij -->
+<div class="main-wrapper"> 
+    <div class="container-fluid">
+
+<!--HEADER -->
 
     <div class="row">
         <div class="col-md-12">
@@ -28,76 +29,75 @@
         </div>
     </div>
 
-<!-- AGENDA BLOK -->
-   <div class="row">
-        <div class="col-md-3">
+<!-- MAIN LAYOUT -->
+    <div class="row">
 
-    {% set agenda = [
-        { titel: 'Vegetarisch koken', omschrijving: 'Een workshop vegetarisch koken, onder leiding van Nesta Schuler' },
-        { titel: 'Vegetarisch koken', omschrijving: 'Een workshop vegetarisch koken, onder leiding van Nesta Schuler' },
-        { titel: 'Vegetarisch koken', omschrijving: 'Een workshop vegetarisch koken, onder leiding van Nesta Schuler' },
-        { titel: 'Vegetarisch koken', omschrijving: 'Een workshop vegetarisch koken, onder leiding van Nesta Schuler' },
-        { titel: 'Vegetarisch koken', omschrijving: 'Een workshop vegetarisch koken, onder leiding van Nesta Schuler' }
-        ] %}
+        <!-- SIDEBSAAR(AGENDA + LOGIN) --> 
+            <div class="col-md-3">
 
-<div class="agenda-block">  
-    <img src="assets/img/verrukkulluk-agenda.png" alt="Agenda Icon" class="agenda-top-icon mb-3">
+        {% set agenda = [
+            { titel: 'Vegetarisch koken', omschrijving: 'Een workshop vegetarisch koken, onder leiding van Nesta Schuler' },
+            { titel: 'Vegetarisch koken', omschrijving: 'Een workshop vegetarisch koken, onder leiding van Nesta Schuler' },
+            { titel: 'Vegetarisch koken', omschrijving: 'Een workshop vegetarisch koken, onder leiding van Nesta Schuler' },
+            { titel: 'Vegetarisch koken', omschrijving: 'Een workshop vegetarisch koken, onder leiding van Nesta Schuler' },
+            { titel: 'Vegetarisch koken', omschrijving: 'Een workshop vegetarisch koken, onder leiding van Nesta Schuler' }
+            ] %}
 
-    {% for item in agenda %}
-        <div class="agenda-item">
-            <div class="icon-calendar"><i class="fa fa-calendar"></i></div>
+        <!-- Agenda block -->
+        <div class="agenda-block">  
+            <img src="assets/img/verrukkulluk-agenda.png" alt="Agenda Icon" class="agenda-top-icon mb-3">
 
-            <div class="agenda-content">
-                <h3>{{ item.titel }}</h3>
-                <p>{{ item.omschrijving }}</p>
-            </div>
+            {% for item in agenda %}
+                <div class="agenda-item">
+                    <div class="icon-calendar"><i class="fa fa-calendar"></i></div>
+
+                    <div class="agenda-content">
+                        <h3>{{ item.titel }}</h3>
+                        <p>{{ item.omschrijving }}</p>
+                    </div>
+                    </div>
+            {% endfor %}
+
         </div>
-    {% endfor %}
 
-</div>
+        <!--Login block -->
 
-<!--Login Block -->
+        <div class= "login-block">
+            <img src="assets/img/verrukkulluk-login.png" alt="Login" class ="login-logo">
 
-<div class= "login-block">
-    <img src="assets/img/verrukkulluk-login.png" alt="login" class ="login-logo"
-<form>
-    <input type="email" placeholder="Email" class="form-control mb-2">
-    <input type="password"placeholder="Wachtwoord"class="form-control mb-2">
-    <button type="submit" class="login-btn">Login</button>
-</form>
-  </div>
+            <form>
+                <input type="email" placeholder="Email" class="form-control mb-2">
+                <input type="password"placeholder="Wachtwoord"class="form-control mb-2">
+                <button type="submit" class="login-btn">Login</button>
+            </form>
+        </div>
+    </div>
 
-<!--Content -->
-
-</div>
-
-      </div>
+<!--CONTENT -->
         <div class="col-md-9">
-            <h2>Hier komt de homepage met de 4 recepten etc.</h2>
             {%  block content %}
             {%  endblock %}
         </div>
     </div> 
+</div>
 
-<!--Footer-->
+<!--FOOTER-->
 
     <div class="row">
         <div class="col-md-12">
             <div class="footer">
-            <div class="footer-content">
-            <img src="assets\img\verrukkulluk-pay-off.png" class= "footer-icon">
+                <div class="footer-content">
+                    <img src="assets/img/verrukkulluk-pay-off.png" alt="Burger Logo" class= "footer-icon">
 
-            <div class="footer-text"> 
-            <h1>Contact</h1>
-            <p>Verrukkulluk.nl<br>
+                <div class="footer-text"> 
+                <h1>Contact</h1>
+                <p>Verrukkulluk.nl<br>
                 Poststraat 2b<br>
                 Sittard<br>
                 info@verrukkulluk.nl
-            </p>
+                </p>
+            </div>
         </div>
-    </div>
-
-
 </div>
-
 </body>
+</html>

@@ -57,11 +57,19 @@ html, body {
 body {
     display: flex;
     flex-direction: column;
+    min-height: 100vh; 
+    background-color: white;
+    padding-top: 20px; 
 }
 
-.container-fluid{
+.main-wrapper{
+    width:70%; 
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
     flex: 1;
 }
+
 
 /*AGENDA CLASS*/
 
@@ -71,6 +79,14 @@ body {
     border-radius: 10px;
     color: rgb(255, 255, 255); 
     box-shadow: 0 8px 12px rgba(0,0,0,0.25); 
+    overflow-y: auto;
+    max-height: 1000px;
+    word-wrap: break-word;
+    height: auto; 
+}
+
+.col-md3 {
+    min-width: 250px;
 }
 
 .agenda-top-icon {
@@ -79,12 +95,11 @@ body {
     margin: 0 auto;
 }
 
-/* Grote titel "Agenda" */
-.agenda-block h2 {
-    font-family: 'Dancing Script', cursive; /* handgeschreven stijl */
-    font-size: 36px;
-    color: #fff;
-    text-align: center;
+.agenda-item {
+    display: flex;            /* horizontaal naast elkaar */
+    align-items: flex-start;  /* icoon uitlijnen met tekst */
+    gap: 15px;                /* ruimte tussen icoon en tekst */
+    margin-bottom: 25px;
 }
 
 /* Subkopjes "Vegetarisch koken" */
@@ -104,14 +119,6 @@ body {
     color: #000;
 }
 
-
-.agenda-item {
-    display: flex;            /* horizontaal naast elkaar */
-    align-items: flex-start;  /* icoon uitlijnen met tekst */
-    gap: 15px;                /* ruimte tussen icoon en tekst */
-    margin-bottom: 25px;
-}
-
 /* Icoon groter maken */
 .icon-calendar {
     font-size: 40px;          /* groter maken, bv 36px */
@@ -129,8 +136,9 @@ body {
     box-shadow: 0 8px 12px rgba(0, 0, 0, 0.25); 
     color: white;
     margin: 25px 0; 
-    box-shadow: 0 8px 12px rgba(0,0,0,0.25); 
-    
+    overflow-y: auto;
+    max-height: 500px; 
+    word-wrap: break-word;
 }
 
 .login-logo {
@@ -188,4 +196,116 @@ body {
     font-size: 18px;
     display: flex;
     flex-direction: column; /*zet Contact boven de tekst*/ 
+}
+
+/* HOMEPAGE HTML*/
+
+.hero-header-link {
+    display: block;
+    text-decoration: none;
+    position: relative;
+    z-index: 0; 
+}
+
+.hero-header {
+    position: relative;
+    height: 400px;
+    overflow: hidden;
+    margin-bottom: 40px;
+}
+
+.hero-wrapper {
+    padding: 20px;
+    margin-top: 20px; 
+    background-color: #fff; 
+}
+
+.hero-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: center; 
+    z-index: 0;
+}
+
+.hero-logo {
+    position: absolute !important;
+    top: 20px !important;
+    left: 20px !important;
+    width: 360px !important;
+    z-index: 9999 !important;
+}
+
+.search-form {
+    position: absolute;
+    top: 20px;
+    right: 20px;      /* rechtsboven */
+    width: 280px;
+    z-index: 3;
+}
+
+.search-input {
+    border-radius: 20px;
+    padding-left: 15px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+
+
+/*RECIPE CARDS CONTENT*/
+.recipe-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    overflow: hidden;
+}
+
+.recipe-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+}
+
+.recipe-content {
+    padding: 15px;
+}
+
+.recipe-title {
+    font-family: var(--heading);
+    font-size: 1.6rem;
+    color: var(--lighter-green);
+}
+
+.star-on { color: #fca01f; }
+.star-off { color: #ddd; }
+
+.recipe-description {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.5;
+}
+
+.smullen-btn {
+    background-color: var(--darker-red);
+    color: white;
+    border-radius: 20px;
+    padding: 8px 20px;
+    font-family: var(--heading);
+    font-size: 1.2rem;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.smullen-btn:hover {
+    background-color: var(--lighter-red);
+    color: white;
+}
+
+.recipe-meta {
+    font-size: 14px;
+    color: #555;
 }

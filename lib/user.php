@@ -1,6 +1,5 @@
 <?php
-
-class user {
+class User {
 
     private $connection;
 
