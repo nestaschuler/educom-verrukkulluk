@@ -1,20 +1,205 @@
 {% extends "main.html.twig" %}
 
+{% if data is not empty %}
+    {% set recipe = data[0] %}
+{% endif %}
+
 {% block header %}
-<h1>Hallo Nesta</h1>
+<a href="index.php?action=homepage" class="hero-header-link">
+    <div class="hero-header">
+        <img src="{{recipe.image}}" alt="afbeelding header" class="hero-bg">
+        <img src="assets/img/logo-v2.png" alt="Verrukkulluk logo" class="hero-logo">
+        <form class="search-form" onclick="event.stopPropagation()">
+            <input type="text" class="form-control search-input" placeholder="Zoeken">
+        </form>
+    </div>
+</a>
 {% endblock %}
 
-            <!--Geen idee wat ik hier mee moet
-                <ul class="ingredients">
-                    {% for ingr in record.ingredients %}
-                        <li>
-                            <span {% if ingr.id < 2 %}style="color:#F00"{% endif %}>
-                                {{ ingr.name }}
-                            </span>
+{% block content %}
 
-                            {% if ingr.id == 3 %}
-                                <strong>Dit is ID 3!</strong>
-                            {% endif %}
-                        </li>
-                    {% endfor %}
-                </ul>-->
+
+<!-- BLOK 1: recept info -->
+<div class="detail-card mb-4">
+    <div class="d-flex">
+
+        <!-- Linker foto -->
+        <div class="detail-img-wrapper">
+            <img src="{{ recipe.image }}" class="detail-img">
+        </div>
+
+        <!-- Rechter info -->
+        <div class="detail-info">
+
+
+            <!-- Meta bovenaan -->
+            <div style="display: flex; gap: 20px; align-items: center;">
+                    <span class="recipe-meta"><i class="fa fa-users" style="color: #b31714;"></i> {{ recipe.user| default(4)}}</span>
+                    <span class="recipe-meta"><span class="meta-icon">€</span> {{ recipe.price }},-</span>
+                    <span class="recipe-meta"><i class="fa fa-fire" style="color: #b31714;"></i> {{ recipe.calories}}</span>
+             </div>
+
+            <!--? Titel + sterren -->
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <h3 class="recipe-title mb-0">{{ recipe.titel|default('Vegan Burger') }}</h3>
+            <div class="recipe-stars" id="star-rating">
+                {% set rating = 0 %}
+                {% for i in 1..5 %}
+                    <i class="fa fa-star {{ i <= rating ? 'star-on' : 'star-off' }}"
+                    data-value="{{ i }}"
+                    style="cursor:pointer;"></i>
+                {% endfor %}
+            </div>
+            <small id="rating-feedback" style= "color:#888;"></small> 
+        </div>
+
+            <!-- Keuken + Type -->
+           <div class="d-flex align-items-center mb-3">
+                <span class="detail-tag-label">Kitchen</span>
+                <span class="detail-tag-value">{{ recipe.kitchen|default('Amerikaans') }}</span>
+                <span class="detail-tag-label" style="margin-left: 40px;">Type</span>
+                <span class="detail-tag-value">{{ recipe.type|default('Vegan') }}</span>
+            </div>
+
+            <!-- Beschrijving -->
+            <p class="recipe-description">{{ recipe.long_description|default("beschrijving")}}</p>
+
+            <!-- Op lijst knop + hartje -->
+            <div class="d-flex align-items-center justify-content-between mt-3">
+                <a href="#" class="smullen-btn">On list</a>
+                <i class="far fa-heart" style="font-size: 24px; color: #b31714;"></i>
+            </div>
+        </div>
+     </div>
+</div>
+
+<!-- BLOK 2: tabs -->
+<div class="detail-tabs-card">
+
+<ul class="nav detail-tabs mb-3">
+    <li class="nav-item">
+        <a class="nav-link active" href="#ingredienten" data-toggle="tab">Ingredients</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#bereidingswijze" data-toggle="tab">Preparation</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#opmerkingen" data-toggle="tab">Comments</a>
+    </li>
+</ul>
+
+<!-- hier maak ik mijn tab ingredienten-->
+    <div class="tab-content">
+        <div class="tab-pane fade show active" id="ingredienten">
+            <div class="ingredients-scroll">
+                {% for ingr in recipe.ingredients %}
+                    <div class="ingredient-item d-flex align-items-center gap-3 mb-3">
+                        <img src="{{ ingr.image }}" class="ingredient-img">
+                        <div>
+                            <h4 class="ingredient-title">{{ ingr.name }}</h4>
+                            <p class="ingredient-desc">{{ ingr.description|default('Lorem ipsum dolor sit amet.') }}</p>
+                            <span class="ingredient-quantity">Quantity: {{ ingr.quantity }} {{ ingr.unit}} </span>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+<!-- hier maak ik mijn tab bereidingswijze-->
+        <div class="tab-pane fade" id="bereidingswijze">
+            <div class = "bereidingswijze">
+                {% for step in recipe.preparation %}
+                <div class="step-item d-flex align-items-start gap-3 mb-3">
+                    
+                    <!-- Optioneel logo / icoon -->
+                    <div class="step-icon step-number">
+                        {{loop.index}}
+                    </div>
+
+                    <!-- Stap inhoud -->
+                    <div>
+                        <p class="step-description step-text">
+                            {{ step.text_field|default('No description available.') }}
+                        </p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+<!-- hier maak ik mijn tab opmerkingen-->
+        <div class="tab-pane fade" id="opmerkingen">
+            <div class="opmerkingen">
+                {% for comment in recipe.comments %}
+                <div class="comment-item d-flex align-items-start gap-3 mb-3">
+
+                    <!-- Profielfoto -->
+                    <div class="comment-avatar">
+                        <img src="{{ comment.image|default('assets/img/default-user.png') }}" class="avatar-img">
+                    </div>
+
+                    <!-- Inhoud -->
+                    <div class="comment-content">
+                        <h6 class="comment-username">
+                            {{ comment.user_name|default('Anonymous user') }}
+                        </h6>
+                        <p class="comment-text">
+                            {{ comment.text_field|default('No comment.') }}
+                        </p>
+                    </div>
+
+                </div>
+            {% else %}
+                <p class="recipe-description">No comments yet.</p>
+            {% endfor %}
+    </div>
+
+<!--pijltje naar beneden om te scrollen--> 
+        <div class="scroll-arrow">
+        <i class="fa fa-chevron-down"></i>
+        </div>
+    </div>
+</div>
+</div>
+
+<script>
+
+window.onload = function() {
+    function sendRating(rating, recipeId) {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function () {
+
+            if (this.readyState ==4 && this.status == 200){
+                var data = JSON.parse(this.responseText); 
+                if (data.success) {
+                    document.getElementById("rating-feedback").innerHTML = "thanks for your " + rating + " stars.";
+
+                    var stars = document.querySelectorAll('#star-rating .fa-star'); 
+                    stars.forEach(function(star) {
+                        if (star.getAttribute('data-value') <= rating) {
+                            star.className = 'fa fa-star star-on';
+                        } else {
+                        star.className = 'fa fa-star star-off'; 
+                        }
+                    }); 
+                }
+            }; 
+        }
+
+        xmlhttp.open("GET", "index.php?action=rating&recipe_id=" + recipeId + "&rating=" + rating, true);
+        xmlhttp.send();
+    } 
+
+    var stars = document.querySelectorAll('#star-rating .fa-star');
+    stars.forEach(function(star) {
+        star.addEventListener('click', function() {
+            var rating = this.getAttribute('data-value');
+            var recipeId = {{ recipe.recipe_id }};
+            sendRating(rating, recipeId);
+        });
+    });
+}
+
+</script>
+
+{% endblock %}

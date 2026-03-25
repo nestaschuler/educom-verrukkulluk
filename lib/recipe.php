@@ -35,8 +35,8 @@ class Recipe {
             $return[] = [                                                   //Voeg recept toe plus bijbehorende waardes toe aan return-array
                 "recipe_id" => $row["id"],
                 "titel" => $row["titel"],  
-                "kitchen_id"=> $kitchen["description"],
-                "type_id" => $type["description"],
+                "kitchen"=> $kitchen["description"],
+                "type" => $type["description"],
                 "image" => $row["image"],
                 "user_id" => $user["id"],
                 "user_name" => $user["user_name"],
@@ -45,8 +45,8 @@ class Recipe {
                 "long_description" => $row["long_description"],
                 "ingredients"=> $ingredients, 
                 "comments"=> $this->selectRecipeInfo($row['id'], 'C'), 
-                "preparation"=> array_column($this->selectRecipeInfo($row['id'], 'P'), 'text_field'), 
-                "ratings"=> array_column($this->selectRecipeInfo($row['id'], 'R'), 'numeric_field'),
+                "preparation"=> $this->selectRecipeInfo($row['id'], 'P'), 
+                "rating"=> array_column($this->selectRecipeInfo($row['id'], 'R'), 'numeric_field'),
                 "average_rating" => $this->selectAverageRating($row['id']), 
                 "calories" => $this->calcCalories($ingredients), 
                 "price" => $this->calcPrice($ingredients), 
@@ -76,7 +76,7 @@ class Recipe {
         return $this->recipeinfo->selectRecipeInfo($recipe_id, $record_type); 
     }
 
-    Private function determineFavorite($user_id, $recipe_id){
+    Public function determineFavorite($user_id, $recipe_id){
         $sql = "SELECT * FROM recipe_info 
                 WHERE user_id = $user_id
                 AND recipe_id = $recipe_id
@@ -85,6 +85,14 @@ class Recipe {
         $result = mysqli_query($this->connection, $sql);  
         
         return ($result);
+    }
+
+    Public function addRating($recipe_id, $rating){
+
+        $sql = "INSERT INTO recipe_info (recipe_id, record_type, numeric_field) 
+                VALUES ($recipe_id, 'R', $rating)";
+
+        mysqli_query($this->connection, $sql); 
     }
 
     Private function selectAverageRating($recipe_id){

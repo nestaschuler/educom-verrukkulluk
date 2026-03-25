@@ -5,7 +5,7 @@
 {% block header %}
 <a href="index.php?action=homepage" class="hero-header-link">
     <div class="hero-header">
-        <img src="assets/img/istockphoto-1147252758-612x612.jpg" alt= "afbeelding header" class="hero-bg">
+        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1600" alt="afbeelding header" class="hero-bg">
 
         <!-- Logo linksboven -->
     
@@ -26,14 +26,15 @@
 
 {% block content %}
 
+<div class="recipe-grid">
 <div class="row">
     {% for record in data %}
         <div class="col-md-6 mb-4">
             <div class="recipe-card">
 
             <!-- foto -->
-
-                <img src="{{ record.foto }}" class="img-fluid mb-2" style="height:150px; object-fit:cover; width:100%;">
+                <img src="{{ record.image }}" class="recipe-img">
+                <a href="index.php?action=detail&recipe_id={{ record.recipe_id }}"> </a>
 
             <!-- content met padding -->
 
@@ -43,8 +44,9 @@
             <div class="d-flex justify-content-between align-items-center mb-2">
                 <h3 class= "recipe-title mb-0">{{ record.titel|default('Eggs & Veggies') }}</h3>
                 <div class="recipe-stars">
+                {% set rating = record.average_rating %}
                     {% for i in 1..5 %}
-                        {% if i <= record.rating %}
+                        {% if i <= rating %}
                             <i class="fa fa-star star-on" style="color: #fca01f;"></i>
                         {% else %}
                             <i class="fa fa-star star-off" style="color: #ddd;"></i>
@@ -58,19 +60,16 @@
             <p class="recipe-description">{{ record.description|default('Lorem ipsum dolor sit amet, consectetur adipiscing elit, do eiusmod tempor incididunt ut labore et dolore magna aliqua.') }}</p>
 
             
-
             <!-- Knop + meta-info -->
 
-                <div class="d-flex align-items-center justify-content-between mt-3">
-                    <a href="index.php?action=recipe&id={{ record.id }}" class="smullen-btn">Smullen!</a>
-
-                      <div class="d-flex gap-3">
-                            <span class="recipe-meta"><i class="fa fa-users"></i> {{ record.persons }}</span>
-                            <span class="recipe-meta">€ {{ record.price }},-</span>
-                            <span class="recipe-meta"><i class="fa fa-fire"></i> {{ record.calories }}</span>
+                <div class="recipe-bottom d-flex align-items-center justify-content-between mt-3">
+                   <a href="index.php?action=detail&recipe_id={{ record.recipe_id }}" class="smullen-btn">Smullen!</a>
+                   <div style="display: flex; gap: 20px; align-items: center;">
+                        <span class="recipe-meta"><i class="fa fa-users" style="color: #b31714;"></i> {{ record.user|default(4) }}</span>
+                        <span class="recipe-meta"><span class="meta-icon">€</span> {{ record.price|default('12') }},-</span>
+                        <span class="recipe-meta"><i class="fa fa-fire" style="color: #b31714;"></i> {{ record.calories|default(450) }}</span>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -83,8 +82,10 @@
         <button class="pagination-btn {% if i == 1 %}active{% endif %}">{{ i }}</button>
     {% endfor %}
 </div>
+</div>
 
 <!--<pre>{{ dump(data) }}</pre>-->
+
 
 {% endblock %}
 

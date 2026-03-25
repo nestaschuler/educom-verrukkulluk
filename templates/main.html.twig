@@ -10,8 +10,8 @@
 
     <link rel="stylesheet" type="text/css" href="assets/css/main.css" />
 
-    <script type="text/javascript" language="javascript" src="assets/jquery/jquery-3.5.1.js"></script>
-    <script type="text/javascript" language="javascript" src="assets/bootstrap/js/bootstrap.bundle.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.bundle.js"></script>
+    <script src="assets/jquery/jquery-3.5.1.js"></script>
 
 </head>
 <body>
@@ -30,10 +30,10 @@
     </div>
 
 <!-- MAIN LAYOUT -->
-    <div class="row">
+    <div class="row main-row">
 
         <!-- SIDEBSAAR(AGENDA + LOGIN) --> 
-            <div class="col-md-3">
+            <div class="col-md-4">
 
         {% set agenda = [
             { titel: 'Vegetarisch koken', omschrijving: 'Een workshop vegetarisch koken, onder leiding van Nesta Schuler' },
@@ -74,30 +74,30 @@
     </div>
 
 <!--CONTENT -->
-        <div class="col-md-9">
+        <div class="col-md-8 d-flex flex-column">
             {%  block content %}
             {%  endblock %}
         </div>
     </div> 
-</div>
 
-<!--FOOTER-->
-
-    <div class="row">
-        <div class="col-md-12">
-            <div class="footer">
-                <div class="footer-content">
-                    <img src="assets/img/verrukkulluk-pay-off.png" alt="Burger Logo" class= "footer-icon">
-
-                <div class="footer-text"> 
+   <!-- FOOTER -->
+    <div class="footer" style="margin-top: 40px;">
+        <div class="footer-content">
+            <img src="assets/img/verrukkulluk-pay-off.png" alt="Burger Logo" class="footer-icon">
+            <div class="footer-text">
                 <h1>Contact</h1>
                 <p>Verrukkulluk.nl<br>
                 Poststraat 2b<br>
                 Sittard<br>
-                info@verrukkulluk.nl
-                </p>
+                info@verrukkulluk.nl</p>
             </div>
         </div>
-</div>
+    </div>
+
+</div> <!-- einde main-wrapper -->
+
+<!-- sterretjes rating -->
+
+
 </body>
 </html>

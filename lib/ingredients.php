@@ -40,6 +40,7 @@ Class Ingredients {
                                 "packaging" => $product["packaging"], 
                                 "calories" => $product["calories"],
                                 "packaging_amount" => $product["packaging_amount"],
+                                "image" => $product["image"],
                                 ];
     
                 }
