@@ -1,0 +1,85 @@
+{% extends "main.html.twig" %}
+
+{% block header %}
+<a href="index.php?action=homepage" class="hero-header-link">
+    <div class="hero-header">
+        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1600" alt="afbeelding header" class="hero-bg">
+
+        <!-- Logo linksboven -->
+    
+        <img src="assets/img/logo-v2.png" alt="Verrukkulluk logo" class="hero-logo">
+    
+
+        <!-- Zoekbalk rechtsboven--> 
+
+        <form class="search-form" onclick="event.stopPropagation()">
+        <input type="text" class="form-control search-input" placeholder="Zoeken">
+        </form> 
+    </div>
+</a> 
+
+{% endblock %}
+
+{% block content %}
+<div class="groceries-card">
+    <h2 class="groceries-title">Groceries</h2>
+
+    {% for item in data.items %}
+    <div class="grocery-item d-flex align-items-center justify-content-between gap-3 mb-3">
+        <img src="{{ item.image }}" class="ingredient-img">
+        <div class="flex-grow-1">
+            <h4 class="ingredient-title">{{ item.name }}</h4>
+            <p class="ingredient-desc">{{ item.description|default('Lorem ipsum dolor sit amet.') }}</p>
+        </div>
+        <div class="grocery-amount">
+            {{ item.amount }}
+        </div>
+        <div class="grocery-price">
+            € {{ item.price }}
+        </div>
+        <div class="grocery-actions">
+            <i class="fa fa-check" style="color: #b31714;"></i>
+            <i class="fa fa-trash" data-product-id="{{ item.product_id }}" style="color: #b31714; cursor:pointer;"></i>
+        </div>
+    </div>
+    {% endfor %}
+
+    <div class="d-flex justify-content-between align-items-center mt-4">
+        <h3 class="groceries-total">Total</h3>
+        <div class="d-flex align-items-center gap-3">
+            <span class="grocery-price">
+                € {{ data.total }}
+            </span>
+        </div>
+    </div>
+
+</div>
+
+<script>
+
+// Delete grocery item
+document.querySelectorAll('.fa-trash').forEach(function(trash) {
+    trash.addEventListener('click', function() {
+        var productId = this.getAttribute('data-product-id');
+
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.open('POST', 'index.php?action=deleteGrocery', true);
+        xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+        xmlhttp.onreadystatechange = function() {
+            if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+                var data = JSON.parse(xmlhttp.responseText);
+                if (data.success) {
+                    location.reload();
+                }
+            }
+        };
+
+        xmlhttp.send('product_id=' + productId);
+    });
+});
+
+</script>
+
+{% endblock %}
+

@@ -324,6 +324,7 @@ h3, h4, h5 { font-size: 32px; }
     font-weight: bold;
 }
 
+
 /* =========================================================
    7. PAGINATION
    ========================================================= */
@@ -363,6 +364,11 @@ h3, h4, h5 { font-size: 32px; }
    8. DETAIL PAGE
    ========================================================= */
 
+.detail-flex {
+    display: flex;
+    flex-wrap: wrap; 
+}
+
 .detail-card {
     background: #fff;
     border-radius: 12px;
@@ -370,9 +376,8 @@ h3, h4, h5 { font-size: 32px; }
 }
 
 .detail-img-wrapper {
-    width: 45%;
-    min-width: 250px;
-    min-height: 400px;
+    flex: 1 1 300px;
+    max-width: 45%;
 }
 
 .detail-img {
@@ -386,6 +391,7 @@ h3, h4, h5 { font-size: 32px; }
     flex: 1;
     display: flex;
     flex-direction: column;
+    padding-top: 20px;
 }
 
 .detail-tag-label {
@@ -398,6 +404,17 @@ h3, h4, h5 { font-size: 32px; }
 .detail-tag-value {
     font-size: 16px;
     color: #555;
+}
+
+.action-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.action-row .fa-heart {
+    margin-left: auto;
+    margin-right: 20px; 
 }
 
 .detail-tabs-card {
@@ -513,7 +530,72 @@ h3, h4, h5 { font-size: 32px; }
 }
 
 /* =========================================================
-   9. FOOTER
+   9. Groceries
+   ========================================================= */
+
+.groceries-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    max-width: 100%;
+}
+
+.groceries-title {
+    font-family: var(--heading);
+    color: var(--lighter-green);
+    font-size: 52px;
+    margin-bottom: 20px;
+}
+
+.grocery-item {
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 15px;
+}
+
+.grocery-amount {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 4px 14px;
+    font-size: 0.9rem;
+    color: #333;
+    min-width: 50px;
+    text-align: center;
+}
+
+.grocery-price {
+    color: #b31714;
+    font-weight: 500;
+    min-width: 60px;
+    text-align: right;
+    margin-right: 20px;
+}
+
+.grocery-actions {
+    display: flex;
+    gap: 20px;
+    font-size: 1.1rem;
+    align-items: center;
+}
+
+.grocery-actions .fa-check {
+    color: #b31714;
+    cursor: pointer;
+}
+
+.grocery-actions .fa-trash {
+    color: #b31714;
+    cursor: pointer;
+}
+
+.groceries-total {
+    font-family: var(--heading);
+    color: var(--darker-red);
+    font-size: 48px;
+}
+
+/* =========================================================
+   10. FOOTER
    ========================================================= */
 
 .footer {

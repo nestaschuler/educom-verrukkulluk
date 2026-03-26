@@ -56,15 +56,31 @@ Class Groceries {
         return mysqli_num_rows($result) > 0;                                                    // true als het product dus al op de lisjt staat
     }
 
-    Public function deleteGroceries($user_id) {
-        
-        $sql = "DELETE FROM groceries WHERE user_id = $user_id";                                //verwijder alle rijen van deze gebruiker
-        mysqli_query($this->connection, $sql);
 
-        $sql2 = "ALTER TABLE groceries AUTO_INCREMENT = 1";                                     //ik wil dat groceries id weer reset
-        mysqli_query($this->connection, $sql2); 
+   Public function selectGroceries($user_id) {
+    $sql = "SELECT groceries.*, product.name, product.image, product.price 
+            FROM groceries 
+            JOIN product ON groceries.product_id = product.id
+            WHERE groceries.user_id = $user_id";
+    
+    $result = mysqli_query($this->connection, $sql);
+    
+    $return = [];
+    $total = 0;
 
-        echo"All groceries are deleted";
+    while ($row = mysqli_fetch_assoc($result)) {
+        $return[] = $row;
+        $total += $row['price'] * $row['amount'];
     }
+    
+    return ['items' => $return, 'total' => $total];
+}
+
+    Public function deleteGroceryItem($user_id, $product_id) {
+    $sql = "DELETE FROM groceries 
+            WHERE user_id = $user_id 
+            AND product_id = $product_id";
+    mysqli_query($this->connection, $sql);
+}
  }
 

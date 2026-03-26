@@ -76,11 +76,9 @@ class Recipe {
         return $this->recipeinfo->selectRecipeInfo($recipe_id, $record_type); 
     }
 
-    Public function determineFavorite($user_id, $recipe_id){
-        $sql = "SELECT * FROM recipe_info 
-                WHERE user_id = $user_id
-                AND recipe_id = $recipe_id
-                AND record_type = 'F'";
+    Public function addFavorite($user_id, $recipe_id){
+        $sql = "INSERT INTO recipe_info (user_id, record_type, recipe_id) 
+                VALUES ($user_id, 'F', $recipe_id)";
         
         $result = mysqli_query($this->connection, $sql);  
         
@@ -95,7 +93,7 @@ class Recipe {
         mysqli_query($this->connection, $sql); 
     }
 
-    Private function selectAverageRating($recipe_id){
+    Public function selectAverageRating($recipe_id){
                                                                    
         $ratings = array_column($this->selectRecipeInfo($recipe_id, 'R'), 'numeric_field');                                    // Haal eerst alle ratings op bij dat recipe_id, ik haal dus de rijen op van dat recipe_id met bijbehorende rating
 

@@ -61,22 +61,66 @@ switch($action) {
         }
 
 
+
 /// Gebruiker klikt ster → JavaScript vangt klik op → stuurt naar index.php?action=rating → PHP slaat op in database → PHP stuurt {"success":true} terug → JavaScript ontvangt dat en update de sterren///
             
 
         case "rating": {
             $rating = $_GET["rating"];                                                  
             $recipe->addRating($recipe_id, $rating);
+            $newAverage = $recipe->selectAverageRating($recipe_id); 
             header("Content-Type: application/json");
 
             echo json_encode([
                 "success" => true,
                 "rating" => $rating, 
+                "newAverage" => $newAverage,
             ]); 
             exit;
         }
 
-    
+/// gebruiker klikt op hartje -> hartje moet vullen -> gerecht moet worden toegevoegd aan favourites
+        case "addFavorite": {
+            $recipe_id = $_POST['recipe_id']; 
+            $user_id= 1; 
+            $recipe->addFavorite($user_id, $recipe_id); 
+            header("Content-Type: application/json"); 
+
+            echo json_encode([
+                "success" => true,
+            ]);
+            exit; 
+            
+        }
+
+//Groceries list gaan we maken
+        case "groceries": {
+                $user_id = 1;
+                $groceries = new Groceries($connection);
+                $data = $groceries->selectGroceries($user_id);
+                $template = 'groceries.html.twig';
+                $title = 'groceries';
+                break; 
+        }
+
+        case "onlist": {
+            $user_id = 1;
+            $groceries = new Groceries($connection);
+            $groceries->addGroceries($recipe_id, $user_id);
+            header("Location: index.php?action=groceries&recipe_id=" . $recipe_id);
+            exit;
+        }
+
+        case "deleteGrocery": {
+            $user_id = 1;
+            $product_id = $_POST['product_id'];
+            $groceries = new Groceries($connection);
+            $groceries->deleteGroceryItem($user_id, $product_id);
+            header('Content-Type: application/json');
+            
+            echo json_encode(["success" => true]);
+            exit;
+        }
 
 }
 
