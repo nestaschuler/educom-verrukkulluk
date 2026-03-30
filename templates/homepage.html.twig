@@ -76,12 +76,11 @@
     {% endfor %}
 </div>
 </div>
-
-<div class="pagination-bar">
-    {% for i in 1..8 %}
-        <button class="pagination-btn {% if i == 1 %}active{% endif %}">{{ i }}</button>
-    {% endfor %}
-</div>
+    <div class="pagination-bar">
+        {% for i in 1..4 %}
+            <button class="pagination-btn {% if i == 1 %}active{% endif %}">{{ i }}</button>
+        {% endfor %}
+    </div>
 </div>
 
 <!--<pre>{{ dump(data) }}</pre>-->
